@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="DeckManager.ResumePage"
+             Title="Résumé de la session">
+
+    <VerticalStackLayout Padding="30" Spacing="20" VerticalOptions="Center">
+        <Label Text="Session Terminée !" FontSize="32" FontAttributes="Bold" HorizontalOptions="Center" TextColor="#4444FF"/>
+
+        <Frame BackgroundColor="#F0F0F0" CornerRadius="15">
+            <VerticalStackLayout Spacing="15">
+                <Label x:Name="LblTime" FontSize="18" />
+                <Label x:Name="LblDifficult" FontSize="18" TextColor="Red" />
+                <Label x:Name="LblPerfect" FontSize="18" />
+
+                <StackLayout Orientation="Horizontal" Spacing="10">
+                    <Label Text="Score global :" FontSize="20" FontAttributes="Bold"/>
+                    <Label x:Name="LblPercent" FontSize="20" FontAttributes="Bold" TextColor="#44AA44"/>
+                </StackLayout>
+            </VerticalStackLayout>
+        </Frame>
+
+        <Button Text="Retour au Deck" Clicked="OnBackHomeClicked" CornerRadius="25" BackgroundColor="#4444FF" />
+    </VerticalStackLayout>
+</ContentPage>

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="DeckManager.DecksPage"
+             Title="Mes Decks">
+
+    <Grid RowDefinitions="Auto,Auto,*,Auto" Padding="10" RowSpacing="8">
+        <SearchBar Grid.Row="0" 
+                   Placeholder="Rechercher un deck..."
+                   TextChanged="OnSearchTextChanged" />
+
+        <HorizontalStackLayout Grid.Row="1" Spacing="10">
+            <Entry x:Name="NewDeckEntry"
+                   Placeholder="Nom du nouveau deck"
+                   HorizontalOptions="FillAndExpand" />
+            <Button Text="Ajouter"
+                    Clicked="OnAddDeckClicked"
+                    BackgroundColor="#2196F3"
+                    TextColor="White" />
+        </HorizontalStackLayout>
+
+        <CollectionView Grid.Row="2"
+                        x:Name="DecksCollectionView"
+                        SelectionMode="None">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame Margin="0,5"
+                           Padding="10"
+                           BorderColor="LightGray"
+                           CornerRadius="8"
+                           HasShadow="True">
+
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnDeckTapped" CommandParameter="{Binding .}" />
+                        </Frame.GestureRecognizers>
+
+                        <Grid ColumnDefinitions="*,Auto,Auto">
+
+                            <StackLayout Grid.Column="0"
+                                         VerticalOptions="Center"
+                                         x:Name="DisplayStack">
+                                <Label Text="{Binding Name}"
+                                       FontSize="18"
+                                       FontAttributes="Bold" />
+                                <Label Text="{Binding CardCount, StringFormat='{0} cartes'}"
+                                       FontSize="14"
+                                       TextColor="Gray" />
+                            </StackLayout>
+
+                            <HorizontalStackLayout Grid.Column="0"
+                                                  VerticalOptions="Center"
+                                                  IsVisible="False"
+                                                  x:Name="EditStack">
+                                <Entry Text="{Binding Name}"
+                                       HorizontalOptions="FillAndExpand"
+                                       WidthRequest="200" />
+                                <Button Text="✓" 
+                                        Clicked="OnSaveEditClicked" 
+                                        CommandParameter="{Binding .}"
+                                        BackgroundColor="Green" 
+                                        TextColor="White" />
+                                <Button Text="✗" 
+                                        Clicked="OnCancelEditClicked" 
+                                        CommandParameter="{Binding .}"
+                                        BackgroundColor="Red" 
+                                        TextColor="White" />
+                            </HorizontalStackLayout>
+
+                            <Button Grid.Column="1"
+                                    Text="✏️"
+                                    BackgroundColor="Transparent"
+                                    Clicked="OnEditDeckInlineClicked"
+                                    CommandParameter="{Binding .}" />
+
+                            <Button Grid.Column="2"
+                                    Text="🗑️"
+                                    BackgroundColor="Transparent"
+                                    Clicked="OnDeleteDeckClicked"
+                                    CommandParameter="{Binding .}" />
+                        </Grid>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+
+            <CollectionView.EmptyView>
+                <Label Text="Aucun deck trouvé" HorizontalOptions="Center" VerticalOptions="Center" />
+            </CollectionView.EmptyView>
+        </CollectionView>
+
+        <Label Grid.Row="3" x:Name="InfoLabel" Text="Prêt" HorizontalOptions="Center" />
+    </Grid>
+</ContentPage>

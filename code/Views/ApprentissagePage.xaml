@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="DeckManager.ApprentissagePage"
+             Title="Apprentissage">
+
+    <Grid RowDefinitions="Auto,*,Auto" Padding="20" RowSpacing="20">
+
+        <Grid Grid.Row="0" ColumnDefinitions="Auto,*">
+            <Button Grid.Column="0" Text="✕" WidthRequest="50" HeightRequest="50" 
+                    FontSize="28" BackgroundColor="Transparent" TextColor="#4444FF" Clicked="OnCloseClicked"/>
+            <ProgressBar Grid.Column="1" Progress="{Binding Progress}" ProgressColor="#4444FF" 
+                         VerticalOptions="Center" Margin="20,0"/>
+        </Grid>
+
+        <Frame Grid.Row="1" Padding="0" CornerRadius="20" HasShadow="True" BackgroundColor="White">
+            <Grid HeightRequest="300" HorizontalOptions="Fill" VerticalOptions="Center">
+                <!-- Front side (question) -->
+                <ContentView x:Name="CardFront" BackgroundColor="White" Padding="20">
+                    <VerticalStackLayout Spacing="20" VerticalOptions="Center">
+                        <Label Text="Question" FontSize="14" TextColor="Gray" HorizontalOptions="Center"/>
+                        <Label Text="{Binding CurrentFlashcard.Question}" FontSize="24" FontAttributes="Bold" 
+                               HorizontalTextAlignment="Center" VerticalOptions="CenterAndExpand"/>
+                    </VerticalStackLayout>
+                </ContentView>
+
+                <!-- Back side (answer) -->
+                <ContentView x:Name="CardBack" BackgroundColor="White" Padding="20" IsVisible="False">
+                    <VerticalStackLayout Spacing="20" VerticalOptions="Center">
+                        <Label Text="Réponse" FontSize="14" TextColor="Gray" HorizontalOptions="Center"/>
+                        <Label Text="{Binding CurrentFlashcard.Answer}" FontSize="24" 
+                               HorizontalTextAlignment="Center" VerticalOptions="CenterAndExpand"/>
+                    </VerticalStackLayout>
+                </ContentView>
+
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnCardTapped" NumberOfTapsRequired="1" />
+                </Grid.GestureRecognizers>
+            </Grid>
+        </Frame>
+
+        <Grid Grid.Row="2" ColumnDefinitions="*,*" ColumnSpacing="15">
+            <Button x:Name="FailedButton" Grid.Column="0" Text="❌ Échoué" BackgroundColor="#FF4444" TextColor="White"
+                FontAttributes="Bold" Clicked="OnFailedClicked" CornerRadius="25" HeightRequest="60" IsEnabled="False"/>
+            <Button x:Name="SuccessButton" Grid.Column="1" Text="✓ Validé" BackgroundColor="#44AA44" TextColor="White"
+                FontAttributes="Bold" Clicked="OnSuccessClicked" CornerRadius="25" HeightRequest="60" IsEnabled="False"/>
+        </Grid>
+
+    </Grid>
+</ContentPage>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="DeckManager.DeckDetailsPage"
+             Title="Détails du Deck">
+
+    <Grid RowDefinitions="Auto,*,Auto" Padding="10" RowSpacing="8">
+        <Label Grid.Row="0" Text="Flashcards" FontSize="24" FontAttributes="Bold"/>
+
+        <HorizontalStackLayout Grid.Row="2" Spacing="10">
+            <Entry Placeholder="Nouvelle question" Text="{Binding NewFlashcard.Question}" HorizontalOptions="FillAndExpand"/>
+            <Entry Placeholder="Nouvelle réponse" Text="{Binding NewFlashcard.Answer}" HorizontalOptions="FillAndExpand"/>
+            <Button Text="Ajouter" Clicked="OnAddFlashcardClicked" BackgroundColor="#2196F3" TextColor="White"/>
+        </HorizontalStackLayout>
+
+        <CollectionView Grid.Row="1" ItemsSource="{Binding DeckFlashcards}" SelectionMode="None">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame Padding="20" Margin="0,10" CornerRadius="15" HasShadow="True">
+                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="15">
+                            <VerticalStackLayout Grid.Column="0" Spacing="5">
+                                <Label Text="{Binding Question}" FontSize="16" FontAttributes="Bold"/>
+                                <Label Text="{Binding Answer}" FontSize="14" TextColor="Gray"/>
+                            </VerticalStackLayout>
+                            <VerticalStackLayout Grid.Column="1" Spacing="5" WidthRequest="60">
+                                <Button Text="✏️" 
+                                        WidthRequest="45" 
+                                        HeightRequest="45"
+                                        CornerRadius="22"
+                                        BackgroundColor="LightGray"
+                                        TextColor="Black"
+                                        Clicked="OnEditFlashcard"
+                                        CommandParameter="{Binding .}"/>
+                                <Button Text="🗑️" 
+                                        WidthRequest="45" 
+                                        HeightRequest="45"
+                                        CornerRadius="22"
+                                        BackgroundColor="LightGray"
+                                        TextColor="Black"
+                                        Clicked="OnDeleteFlashcard"
+                                        CommandParameter="{Binding .}"/>
+                            </VerticalStackLayout>
+                        </Grid>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+    </Grid>
+</ContentPage>

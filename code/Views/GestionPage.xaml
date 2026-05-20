@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="DeckManager.GestionPage"
+             Title="Gestion des Flashcards">
+    <Grid RowDefinitions="Auto,*,Auto" Padding="20" RowSpacing="20">
+
+        <Label Grid.Row="0"
+               Text="Ajouter une Flashcard"
+               FontSize="24"
+               FontAttributes="Bold"/>
+
+        <VerticalStackLayout Grid.Row="0" Spacing="10">
+            <Label Text="Sélectionnez un deck :" FontSize="18" FontAttributes="Bold"/>
+            <Picker ItemsSource="{Binding Decks}"
+                    SelectedItem="{Binding SelectedDeck}"
+                    ItemDisplayBinding="{Binding Name}"/>
+        </VerticalStackLayout>
+
+        <VerticalStackLayout Grid.Row="1" Spacing="20">
+            <VerticalStackLayout Spacing="5">
+                <Label Text="Question" FontSize="14" FontAttributes="Bold"/>
+                <Frame Padding="0" CornerRadius="8" BorderColor="#E0E0E0" HasShadow="False">
+                    <Entry Placeholder="Entrez la question..."
+                           Text="{Binding CurrentFlashcard.Question, Mode=TwoWay}"
+                           FontSize="14"
+                           BackgroundColor="#F5F5F5"/>
+                </Frame>
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Spacing="5">
+                <Label Text="Réponse" FontSize="14" FontAttributes="Bold"/>
+                <Frame Padding="0" CornerRadius="8" BorderColor="#E0E0E0" HasShadow="False">
+                    <Editor Placeholder="Entrez la réponse..."
+                            Text="{Binding CurrentFlashcard.Answer, Mode=TwoWay}"
+                            FontSize="14"
+                            HeightRequest="150"
+                            BackgroundColor="#F5F5F5"/>
+                </Frame>
+            </VerticalStackLayout>
+        </VerticalStackLayout>
+
+        <Grid Grid.Row="2" ColumnDefinitions="*,*" ColumnSpacing="15">
+            <Button Grid.Column="0"
+                    Text="Annuler"
+                    BackgroundColor="LightGray"
+                    TextColor="Black"
+                    FontSize="16"
+                    FontAttributes="Bold"
+                    Padding="20,15"
+                    CornerRadius="50"
+                    Clicked="OnCancelClicked"/>
+            <Button Grid.Column="1"
+                    Text="Sauvegarder"
+                    BackgroundColor="#4444FF"
+                    TextColor="White"
+                    FontSize="16"
+                    FontAttributes="Bold"
+                    Padding="20,15"
+                    CornerRadius="50"
+                    Clicked="OnSaveClicked"/>
+        </Grid>
+    </Grid>
+</ContentPage>

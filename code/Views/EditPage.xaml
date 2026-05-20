@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="DeckManager.EditPage"
+    Title="Modifier la carte">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="15">
+            <Label Text="Question" FontAttributes="Bold" />
+            <Editor Text="{Binding Question}" AutoSize="TextChanges" />
+
+            <Label Text="Réponse" FontAttributes="Bold" />
+            <Editor Text="{Binding Answer}" AutoSize="TextChanges" />
+
+            <HorizontalStackLayout Spacing="15" HorizontalOptions="Center">
+                <Button Text="Enregistrer" Clicked="OnSaveClicked" />
+                <Button Text="Annuler" Clicked="OnCancelClicked" />
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>
