@@ -1,5 +1,11 @@
 using DeckManager.ViewModels;
+using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using DeckManager.Models;
+using Microsoft.Maui.ApplicationModel;
+using Microsoft.Maui.Controls;
+using Microsoft.Maui.Devices.Sensors;
 
 namespace DeckManager;
 
@@ -8,14 +14,15 @@ public partial class ApprentissagePage : ContentPage
     private readonly ApprentissageViewModel _viewModel;
     private bool _isFlipped = false;
 
-
-    public ApprentissagePage()
+    public ApprentissagePage(List<FlashcardModel> flashcards)
     {
         InitializeComponent();
+
         _viewModel = new ApprentissageViewModel();
         BindingContext = _viewModel;
 
-        // react to card changes to reset flip state
+        _viewModel.InitialiserCartes(flashcards);
+
         _viewModel.PropertyChanged += (s, e) =>
         {
             if (e.PropertyName == nameof(_viewModel.CurrentFlashcard))
@@ -29,8 +36,6 @@ public partial class ApprentissagePage : ContentPage
     {
         base.OnAppearing();
 
-        // On appelle le Reset ici pour que currentIndex repasse 0 
-        // chaque fois qu'on lance une session
         if (BindingContext is ApprentissageViewModel vm)
         {
             vm.ReinitialiserSession();
@@ -68,7 +73,13 @@ public partial class ApprentissagePage : ContentPage
         });
     }
 
-    private async void OnCloseClicked(object sender, EventArgs e) => await Shell.Current.GoToAsync("..");
+    private void OnCloseClicked(object sender, EventArgs e)
+    {
+        // Au lieu de faire un simple retour en arrière (..), 
+        // on demande au ViewModel de forcer la fin de session pour afficher le résumé
+        _viewModel.ForcerFinSession();
+    }
+
     private void OnFailedClicked(object sender, EventArgs e)
     {
         if (!_isFlipped)
@@ -106,7 +117,6 @@ public partial class ApprentissagePage : ContentPage
 
         if (!_isFlipped)
         {
-            // flip front -> back
             await front.RotateYTo(90, 150);
             front.IsVisible = false;
             back.RotationY = -90;
@@ -116,7 +126,6 @@ public partial class ApprentissagePage : ContentPage
         }
         else
         {
-            // flip back -> front
             await back.RotateYTo(90, 150);
             back.IsVisible = false;
             front.RotationY = -90;
@@ -125,7 +134,6 @@ public partial class ApprentissagePage : ContentPage
             _isFlipped = false;
         }
 
-        // enable/disable buttons depending on flip state
         var failed = FailedButton;
         var success = SuccessButton;
         if (failed != null) failed.IsEnabled = _isFlipped;

@@ -5,13 +5,18 @@
              Title="Détails du Deck">
 
     <Grid RowDefinitions="Auto,*,Auto" Padding="10" RowSpacing="8">
-        <Label Grid.Row="0" Text="Flashcards" FontSize="24" FontAttributes="Bold"/>
 
-        <HorizontalStackLayout Grid.Row="2" Spacing="10">
-            <Entry Placeholder="Nouvelle question" Text="{Binding NewFlashcard.Question}" HorizontalOptions="FillAndExpand"/>
-            <Entry Placeholder="Nouvelle réponse" Text="{Binding NewFlashcard.Answer}" HorizontalOptions="FillAndExpand"/>
-            <Button Text="Ajouter" Clicked="OnAddFlashcardClicked" BackgroundColor="#2196F3" TextColor="White"/>
-        </HorizontalStackLayout>
+        <Grid Grid.Row="0" ColumnDefinitions="*, Auto" VerticalOptions="Center">
+            <Label Grid.Column="0" Text="Flashcards" FontSize="24" FontAttributes="Bold" VerticalOptions="Center"/>
+            <Button Grid.Column="1" 
+                    Text="Apprendre" 
+                    BackgroundColor="#2196F3" 
+                    TextColor="White" 
+                    FontAttributes="Bold"
+                    Padding="15,0"
+                    HeightRequest="40"
+                    Clicked="OnStartLearningClicked"/>
+        </Grid>
 
         <CollectionView Grid.Row="1" ItemsSource="{Binding DeckFlashcards}" SelectionMode="None">
             <CollectionView.ItemTemplate>
@@ -45,6 +50,12 @@
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
+
+        <HorizontalStackLayout Grid.Row="2" Spacing="10">
+            <Entry Placeholder="Nouvelle question" Text="{Binding NewFlashcard.Question}" HorizontalOptions="FillAndExpand"/>
+            <Entry Placeholder="Nouvelle réponse" Text="{Binding NewFlashcard.Answer}" HorizontalOptions="FillAndExpand"/>
+            <Button Text="Ajouter" Clicked="OnAddFlashcardClicked" BackgroundColor="#2196F3" TextColor="White"/>
+        </HorizontalStackLayout>
 
     </Grid>
 </ContentPage>

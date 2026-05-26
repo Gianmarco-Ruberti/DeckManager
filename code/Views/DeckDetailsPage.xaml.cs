@@ -30,6 +30,17 @@ public partial class DeckDetailsPage : ContentPage
         InitializeComponent();
         BindingContext = this;
     }
+    private async void OnStartLearningClicked(object sender, EventArgs e)
+    {
+        if (DeckFlashcards.Count == 0)
+        {
+            await DisplayAlert("Deck Vide", "Ajoutez des flashcards avant de lancer l'apprentissage.", "OK");
+            return;
+        }
+
+        var cartesAApprendre = DeckFlashcards.ToList();
+        await Navigation.PushAsync(new ApprentissagePage(cartesAApprendre));
+    }
     private async void OnEditFlashcard(object sender, EventArgs e)
     {
         if (sender is Button button && button.CommandParameter is FlashcardModel flashcard)
@@ -66,6 +77,11 @@ public partial class DeckDetailsPage : ContentPage
         if (string.IsNullOrWhiteSpace(NewFlashcard.Question) || string.IsNullOrWhiteSpace(NewFlashcard.Answer))
         {
             DisplayAlert("Erreur", "Veuillez remplir tous les champs", "OK");
+            return;
+        }
+        if (NewFlashcard.Question.Length > 255 || NewFlashcard.Answer.Length > 255)
+        {
+            DisplayAlert("Erreur", "La question et la réponse ne doivent pas dépasser 255 caractères.", "OK");
             return;
         }
 
